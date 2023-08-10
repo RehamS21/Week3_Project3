@@ -18,4 +18,24 @@ public class ProductService {
         products.add(product);
     }
 
+    public boolean updateProduct(Integer id , Product product){
+        for (int i = 0; i < products.size(); i++) {
+            if(products.get(i).getId() == id){
+                products.set(i , product);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteProduct(Integer id){
+        for (int i = 0; i < products.size(); i++) {
+            if(products.get(i).getId() == id){
+                products.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

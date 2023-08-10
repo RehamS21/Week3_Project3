@@ -30,5 +30,30 @@ public class ProductController {
         return ResponseEntity.status(200).body(new ApiResponse("The product : '"+product.getName()+"' added successfully"));
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity updateProduct(@PathVariable Integer id , @RequestBody @Valid Product product, Errors errors){
+        if (errors.hasErrors()){
+            String message = errors.getFieldError().getDefaultMessage();
+            return ResponseEntity.status(400).body(new ApiResponse(message));
+        }
+
+        boolean isValidProduct = productService.updateProduct(id,product);
+
+        if (isValidProduct)
+            return ResponseEntity.status(200).body(new ApiResponse("Successfully updates"));
+        else
+            return ResponseEntity.status(400).body(new ApiResponse("Sorry , the product id not found"));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteProduct(@PathVariable Integer id){
+        boolean isDeleted = productService.deleteProduct(id);
+
+        if(isDeleted)
+            return ResponseEntity.status(200).body(new ApiResponse("The product successfully deleted"));
+        else
+            return ResponseEntity.status(400).body(new ApiResponse("Sorry, the product id not found"));
+    }
+
 
 }
