@@ -9,20 +9,24 @@ import lombok.Data;
 @AllArgsConstructor
 public class User {
     @NotNull(message = "user id should not a null value")
+    @Positive(message = "user Id must be positive and greater than zero")
     private Integer id;
+
     @NotEmpty(message = "username should not an empty")
     @Size(min = 5 , message = "The length of username should be more than 5")
     private String username;
 
     @NotEmpty(message = "password should not an empty")
     @Size(min = 7 , message = "The length of password should be more than 6")
-//    @Pattern()
+    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])\\S{7,}$",message = "password incorrect")
     private String password;
+
     @NotEmpty(message = "email should not an empty")
-//    @Pattern()
+    @Pattern(regexp = "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$" , message = "Email incorrect")
     private String email;
+
     @NotEmpty(message = "role should not an empty")
-//    @Pattern()
+    @Pattern(regexp = "\\b(Admin)|\\b(Customer)")
     private String role;
 
     @NotNull(message = "balance should not an empty")
