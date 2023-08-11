@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
+
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
@@ -55,6 +57,32 @@ public class UserController {
             return ResponseEntity.status(200).body(new ApiResponse("The user deleted successfully"));
         else
             return ResponseEntity.status(400).body(new ApiResponse("Sorry , the user id is wrong"));
+    }
+
+    @PutMapping("/buyProduct/{userid}/{productid}/{merchantid}")
+    public ResponseEntity buProducts(@PathVariable Integer userid,@PathVariable Integer productid, @PathVariable Integer merchantid){
+        boolean isVaid = userService.checkValid(userid, productid, merchantid);
+        boolean merchantInStock = false;
+        boolean isRightBalance = false;
+        Double checkBalance = 0.0;
+
+        if(isVaid){
+            merchantInStock = userService.merchantInStock(productid);
+            if (merchantInStock){
+                checkBalance = userService.checkBalance(productid,userid);
+                if (checkBalance > 0){
+                    isRightBalance = userService.buyProducts(userid,productid,merchantid);
+                    if (isRightBalance)
+                        return ResponseEntity.status(200).body(new ApiResponse("Successful Buy Operation"));
+                }else
+                    return ResponseEntity.status(400).body(new ApiResponse("Sorry, your balance less than product price"));
+
+            }else
+                return ResponseEntity.status(400).body(new ApiResponse("Sorry, the product out of the stock"));
+
+        }
+
+        return ResponseEntity.status(400).body(new ApiResponse("Sorry, invalid in user id, product id , merchant id"));
     }
 
 }

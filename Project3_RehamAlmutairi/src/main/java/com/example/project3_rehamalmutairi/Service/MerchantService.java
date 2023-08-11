@@ -65,15 +65,11 @@ public class MerchantService {
 
     public boolean additionalStock(Integer productid,Integer merchantId,Integer additionalStock){
         boolean isFound = check_Ids(productid,merchantId);
-//        boolean isAddStock = false;
 
         if (isFound) {
             for (int i = 0; i < merchantStockService.merchantStocks.size(); i++) {
                 if (productid == merchantStockService.merchantStocks.get(i).getProductid() && merchantId == merchantStockService.merchantStocks.get(i).getMerchantid() ){
                     merchantStockService.merchantStocks.get(i).setStock(merchantStockService.merchantStocks.get(i).getStock() + additionalStock);
-//                    MerchantStock merchantStock = merchantStockService.merchantStocks.get(i);
-//                    Integer addStock = merchantStock.getStock() + additionalStock;
-//                    merchantStock.setStock(addStock);
                     return true;
                 }
             }
