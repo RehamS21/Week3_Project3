@@ -1,10 +1,7 @@
 package com.example.project3_rehamalmutairi.Model;
 
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -23,7 +20,7 @@ public class MerchantStock {
     @Positive(message = "The merchant id of merchant stock must be positive and greater than zero")
     private Integer merchantid;
 
-    @NotEmpty( message = "stock should not a null")
-    @Size(min = 11 , message = "The length of stock should be more than 10")
-    private String stock;
+    @NotNull( message = "stock should not a null")
+    @Min(value = 11, message = "The stock should be more than 10")
+    private Integer stock = 10;
 }
