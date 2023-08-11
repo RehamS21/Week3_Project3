@@ -28,11 +28,14 @@ public class MerchantStockController {
             return ResponseEntity.status(400).body(new ApiResponse(message));
         }
 
-        boolean isAdded = merchantStockService.addMerchantStock(merchantStock);
-        if (isAdded) {
-            return ResponseEntity.status(200).body(new ApiResponse("added new merchant stock successfully"));
-        }else
-            return ResponseEntity.status(400).body(new ApiResponse("Sorry, you add merchant id or product id wrong and don't match exist id"));
+        merchantStockService.addMerchantStock(merchantStock);
+        return ResponseEntity.status(200).body(new ApiResponse("added new merchant stock successfully"));
+
+//        boolean isAdded = merchantStockService.addMerchantStock(merchantStock);
+//        if (isAdded) {
+//            return ResponseEntity.status(200).body(new ApiResponse("added new merchant stock successfully"));
+//        }else
+//            return ResponseEntity.status(400).body(new ApiResponse("Sorry, you add merchant id or product id wrong and don't match exist id"));
     }
 
     @PutMapping("/update/{id}")
@@ -47,7 +50,8 @@ public class MerchantStockController {
         if (isvalied)
             return ResponseEntity.status(200).body(new ApiResponse("updated new merchant stock successfully"));
         else
-            return ResponseEntity.status(400).body(new ApiResponse("Sorry, merchant stock id is wrong or add wrong product id and merchant id"));
+            return ResponseEntity.status(400).body(new ApiResponse("Sorry, merchant stock id is wrong "));
+//            return ResponseEntity.status(400).body(new ApiResponse("Sorry, merchant stock id is wrong or add wrong product id and merchant id"));
     }
 
     @DeleteMapping("/delete/{id}")

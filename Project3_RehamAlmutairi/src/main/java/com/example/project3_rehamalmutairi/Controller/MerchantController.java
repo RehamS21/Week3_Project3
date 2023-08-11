@@ -3,6 +3,7 @@ package com.example.project3_rehamalmutairi.Controller;
 import com.example.project3_rehamalmutairi.ApiResponse.ApiResponse;
 import com.example.project3_rehamalmutairi.Model.Merchant;
 import com.example.project3_rehamalmutairi.Service.MerchantService;
+import com.example.project3_rehamalmutairi.Service.MerchantStockService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -56,5 +57,17 @@ public class MerchantController {
         else
             return ResponseEntity.status(400).body(new ApiResponse("Sorry, the merchant id is wrong"));
     }
+
+    @PutMapping("/addStock/{productId}/{merchantid}/{stock}")
+    public ResponseEntity addAdditionalStock(@PathVariable Integer productId, @PathVariable Integer merchantid, @PathVariable Integer stock){
+        boolean isAdd = merchantService.additionalStock(productId,merchantid,stock);
+
+        if(isAdd)
+            return ResponseEntity.status(200).body(new ApiResponse("Add additional stock successfully"));
+        else
+            return ResponseEntity.status(400).body(new ApiResponse("Please verify from the product is or merchant id again"));
+
+    }
+
 
 }

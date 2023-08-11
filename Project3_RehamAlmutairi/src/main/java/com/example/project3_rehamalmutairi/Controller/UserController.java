@@ -1,7 +1,9 @@
 package com.example.project3_rehamalmutairi.Controller;
 
 import com.example.project3_rehamalmutairi.ApiResponse.ApiResponse;
+import com.example.project3_rehamalmutairi.Model.MerchantStock;
 import com.example.project3_rehamalmutairi.Model.User;
+import com.example.project3_rehamalmutairi.Service.MerchantStockService;
 import com.example.project3_rehamalmutairi.Service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
     @GetMapping("/get")
     public ResponseEntity getAllUsers(){
         return ResponseEntity.status(200).body(userService.getAllUsers());
@@ -55,4 +56,5 @@ public class UserController {
         else
             return ResponseEntity.status(400).body(new ApiResponse("Sorry , the user id is wrong"));
     }
+
 }

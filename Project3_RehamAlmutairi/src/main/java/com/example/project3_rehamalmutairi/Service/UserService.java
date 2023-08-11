@@ -1,6 +1,7 @@
 package com.example.project3_rehamalmutairi.Service;
 
 
+import com.example.project3_rehamalmutairi.Model.MerchantStock;
 import com.example.project3_rehamalmutairi.Model.User;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +38,5 @@ public class UserService {
         }
         return false;
     }
+
 }
