@@ -18,15 +18,15 @@ public class User {
 
     @NotEmpty(message = "password should not an empty")
     @Size(min = 7 , message = "The length of password should be more than 6")
-    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])\\S{7,}$",message = "password incorrect")
+    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])\\S{7,}$",message = "The password should have a capital letter, small letters, and numbers")
     private String password;
 
     @NotEmpty(message = "email should not an empty")
-    @Pattern(regexp = "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$" , message = "Email incorrect")
+    @Pattern(regexp = "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$" , message = "Email incorrect, should contain @ and . ")
     private String email;
 
     @NotEmpty(message = "role should not an empty")
-    @Pattern(regexp = "\\b(Admin)|\\b(Customer)")
+    @Pattern(regexp = "\\b(Admin)|\\b(Customer)", message = "The role must be 'Admin' or 'Customer' only")
     private String role;
 
     @NotNull(message = "balance should not an empty")
