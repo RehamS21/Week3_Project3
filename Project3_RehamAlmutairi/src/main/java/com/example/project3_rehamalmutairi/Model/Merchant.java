@@ -1,9 +1,6 @@
 package com.example.project3_rehamalmutairi.Model;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -17,4 +14,7 @@ public class Merchant {
     @NotEmpty(message = "merchant name should not a null value")
     @Size(min = 4, message = "The length of merchant name should be more than 3")
     private String name;
+
+    // For extra credit, this attribute can be null, becuase the user will rate the merchant
+    private Integer scoreRating;
 }

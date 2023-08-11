@@ -17,6 +17,7 @@ import javax.swing.*;
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
+    private static boolean userPurchase = false;
     private final UserService userService;
     @GetMapping("/get")
     public ResponseEntity getAllUsers(){
@@ -72,8 +73,10 @@ public class UserController {
                 checkBalance = userService.checkBalance(productid,userid);
                 if (checkBalance > 0){
                     isRightBalance = userService.buyProducts(userid,productid,merchantid);
-                    if (isRightBalance)
+                    if (isRightBalance) {
+                        userPurchase = true; // for extra credit, to check if user buy product or not
                         return ResponseEntity.status(200).body(new ApiResponse("Successful Buy Operation"));
+                    }
                 }else
                     return ResponseEntity.status(400).body(new ApiResponse("Sorry, your balance less than product price"));
 
@@ -83,6 +86,27 @@ public class UserController {
         }
 
         return ResponseEntity.status(400).body(new ApiResponse("Sorry, invalid in user id, product id , merchant id"));
+    }
+
+    // This part for extra credit
+    // The idea of extra credit is a user can rate the merchant
+    @PutMapping("rate/{merchantid}/{scoreRate}")
+    public ResponseEntity setScoreRating(@PathVariable Integer merchantid, @PathVariable Integer scoreRate){
+        boolean checkMerchantId = false;
+        boolean checkScoreRate = userService.checkScoreRate(scoreRate);
+        if(userPurchase){
+            if (checkScoreRate) {
+                userService.scoreRating(merchantid, scoreRate);
+                checkMerchantId = userService.checkValid(merchantid);
+                if (checkMerchantId) {
+                    userPurchase = false; // for new score rating
+                    return ResponseEntity.status(200).body(new ApiResponse("Your rating the merchant successfully"));
+                } else
+                    return ResponseEntity.status(400).body(new ApiResponse("Invalid merchant id"));
+            }else
+                return ResponseEntity.status(400).body(new ApiResponse("The score rate should be in the range from (1-5) only"));
+        }
+        return ResponseEntity.status(400).body(new ApiResponse("Sorry, you can't rating the merchant becuase you did not buy from his market"));
     }
 
 }

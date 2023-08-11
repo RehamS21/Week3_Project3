@@ -83,7 +83,7 @@ public class UserService {
         }
         return false;
     }
-    
+
     public Double checkBalance(Integer productid , Integer userId){
         Double balance = 0.0;
         for (int i = 0; i < users.size(); i++) {
@@ -129,4 +129,33 @@ public class UserService {
             }
         return isCompletelyBuy;
     }
+
+    //for extra credit
+    public void scoreRating(Integer merhantid, Integer scoreRating){
+        for (int i = 0; i < merchantService.merchants.size(); i++) {
+            if (merchantService.merchants.get(i).getId() == merhantid){
+                merchantService.merchants.get(i).setScoreRating(scoreRating);
+            }
+        }
+    }
+
+    public boolean checkValid(Integer merhcantid){
+
+        for (int i = 0; i < merchantService.merchants.size(); i++) {
+            if (merchantService.merchants.get(i).getId() == merhcantid) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Range of score rate
+    public boolean checkScoreRate(Integer scoreRate){
+        if(scoreRate >= 1 && scoreRate <=5){
+            return true;
+        }else
+            return false;
+    }
+
 }
