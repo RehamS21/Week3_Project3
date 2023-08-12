@@ -65,11 +65,22 @@ public class MerchantController {
     public ResponseEntity addAdditionalStock(@PathVariable Integer productId, @PathVariable Integer merchantid, @PathVariable Integer stock){
         boolean isAdd = merchantService.additionalStock(productId,merchantid,stock);
 
-        if(isAdd)
-            return ResponseEntity.status(200).body(new ApiResponse("Add additional stock successfully"));
+        if(isAdd) {
+            boolean isChecked = checkStockNumber(stock);
+            if (isChecked)
+                return ResponseEntity.status(200).body(new ApiResponse("Add additional stock successfully"));
+            else
+                return ResponseEntity.status(400).body(new ApiResponse("invalid stock number, you must enter more than zero"));
+        }
         else
             return ResponseEntity.status(400).body(new ApiResponse("Please verify from the product is or merchant id again"));
 
+    }
+    public boolean checkStockNumber(Integer stock){
+        if(stock > 0)
+            return true;
+        else
+            return false;
     }
 
 
