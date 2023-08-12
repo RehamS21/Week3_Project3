@@ -15,6 +15,6 @@ public class Merchant {
     @Size(min = 4, message = "The length of merchant name should be more than 3")
     private String name;
 
-    // For extra credit, this attribute can be null, becuase the user will rate the merchant
-    private Integer scoreRating;
+    // For extra credit, this attribute can be null, because the user will rate the merchant
+    private Integer scoreRating =0;
 }
