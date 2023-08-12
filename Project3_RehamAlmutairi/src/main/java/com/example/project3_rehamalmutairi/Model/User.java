@@ -13,7 +13,7 @@ public class User {
     private Integer id;
 
     @NotEmpty(message = "username should not an empty")
-    @Size(min = 5 , message = "The length of username should be more than 5")
+    @Size(min = 6 , message = "The length of username should be more than 5")
     private String username;
 
     @NotEmpty(message = "password should not an empty")
