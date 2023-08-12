@@ -28,8 +28,11 @@ public class MerchantController {
             return ResponseEntity.status(400).body(new ApiResponse(message));
         }
 
-        merchantService.addNewMerchant(merchant);
-        return ResponseEntity.status(200).body(new ApiResponse("add new merchant successfully"));
+        boolean isAdded = merchantService.addNewMerchant(merchant);
+        if (isAdded)
+            return ResponseEntity.status(200).body(new ApiResponse("add new merchant successfully"));
+        else
+            return ResponseEntity.status(400).body(new ApiResponse("Sorry, the merchant id already taken"));
     }
 
     @PutMapping("/update/{id}")
@@ -44,7 +47,7 @@ public class MerchantController {
         if (isvalied)
             return ResponseEntity.status(200).body(new ApiResponse("The merchant information updated successfully"));
         else
-            return ResponseEntity.status(400).body(new ApiResponse("Sorry, the merchant id is wrong"));
+            return ResponseEntity.status(400).body(new ApiResponse("Sorry, the merchant id is wrong or the updated id already taken"));
 
     }
 

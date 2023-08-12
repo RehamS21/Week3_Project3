@@ -35,8 +35,11 @@ public class MerchantStockController {
 
 
         if (checkValid) {
-            merchantStockService.addMerchantStock(merchantStock);
-            return ResponseEntity.status(200).body(new ApiResponse("added new merchant stock successfully"));
+            boolean isAdded = merchantStockService.addMerchantStock(merchantStock);
+            if(isAdded)
+                return ResponseEntity.status(200).body(new ApiResponse("added new merchant stock successfully"));
+            else
+                return ResponseEntity.status(400).body(new ApiResponse("Sorry the merchant stock id is already taken"));
         }else
             return ResponseEntity.status(400).body(new ApiResponse("Sorry, you add merchant id or product id wrong and don't match exist id"));
     }
@@ -48,13 +51,17 @@ public class MerchantStockController {
             return ResponseEntity.status(400).body(new ApiResponse(message));
         }
 
-        boolean isvalied = merchantStockService.updateMerchantStock(id, merchantStock);
-        boolean isChecked = checkIds.isFound(merchantStock.getProductid() , merchantStock.getMerchantid());
-        if (isvalied && isChecked)
-            return ResponseEntity.status(200).body(new ApiResponse("updated new merchant stock successfully"));
+        boolean isChecked = checkIds.isFound(merchantStock.getProductid(), merchantStock.getMerchantid());
+
+        if (isChecked) {
+            boolean isvalied = merchantStockService.updateMerchantStock(id, merchantStock);
+            if (isvalied)
+                return ResponseEntity.status(200).body(new ApiResponse("updated new merchant stock successfully"));
+            else
+                return ResponseEntity.status(400).body(new ApiResponse("Sorry, merchant stock id is wrong or the updated id is already taken "));
+        }
         else
-//            return ResponseEntity.status(400).body(new ApiResponse("Sorry, merchant stock id is wrong "));
-            return ResponseEntity.status(400).body(new ApiResponse("Sorry, merchant stock id is wrong or add wrong product id and merchant id"));
+            return ResponseEntity.status(400).body(new ApiResponse("Sorry, You add wrong product id and merchant id"));
     }
 
     @DeleteMapping("/delete/{id}")

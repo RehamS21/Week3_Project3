@@ -31,7 +31,7 @@ public class ProductController {
         if (isAdded) {
             return ResponseEntity.status(200).body(new ApiResponse("The product : '" + product.getName() + "' added successfully"));
         }else
-            return ResponseEntity.status(400).body(new ApiResponse("Sorry, category id is dose not match"));
+            return ResponseEntity.status(400).body(new ApiResponse("Sorry, category id is dose not match or the product id is already taken"));
     }
 
     @PutMapping("/update/{id}")
@@ -46,7 +46,7 @@ public class ProductController {
         if (isValidProduct)
             return ResponseEntity.status(200).body(new ApiResponse("Successfully updates"));
         else
-            return ResponseEntity.status(400).body(new ApiResponse("Sorry , the product id not found or category id dose not match"));
+            return ResponseEntity.status(400).body(new ApiResponse("Sorry , the product id not found or category id dose not match or updated product id is already taken"));
     }
 
     @DeleteMapping("/delete/{id}")

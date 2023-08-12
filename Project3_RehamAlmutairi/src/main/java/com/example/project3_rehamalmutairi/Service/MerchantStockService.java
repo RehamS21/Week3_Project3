@@ -16,19 +16,42 @@ public class MerchantStockService {
         return merchantStocks;
     }
 
-    public void addMerchantStock(MerchantStock merchantStock){
-        merchantStocks.add(merchantStock);
+    public boolean addMerchantStock(MerchantStock merchantStock){
+        boolean isChecked = checkIds(merchantStock.getId());
+        if (isChecked) {
+            merchantStocks.add(merchantStock);
+            return true;
+        }else
+            return false;
+    }
+    public boolean checkIds(Integer id){
+        for (int i = 0; i < merchantStocks.size(); i++) {
+            if (merchantStocks.get(i).getId() == id)
+                return false;
+        }
+        return true;
     }
 
-    public boolean updateMerchantStock(Integer id , MerchantStock merchantStock){
 
-        for (int i = 0; i < merchantStocks.size(); i++) {
-            if ((merchantStocks.get(i).getId() == id) ){
-                merchantStocks.set(i,merchantStock);
-                return true;
+    public boolean updateMerchantStock(Integer id , MerchantStock merchantStock){
+        boolean isChecked = checkIds(id,merchantStock);
+        if (isChecked) {
+            for (int i = 0; i < merchantStocks.size(); i++) {
+                if ((merchantStocks.get(i).getId() == id)) {
+                    merchantStocks.set(i, merchantStock);
+                    return true;
+                }
             }
         }
         return false;
+    }
+
+    public boolean checkIds(Integer id, MerchantStock merchantStock){
+        for (int i = 0; i < merchantStocks.size(); i++) {
+            if(merchantStock.getId() != id && merchantStock.getId() == merchantStocks.get(i).getId())
+                return false;
+        }
+        return true;
     }
 
     public boolean deleteMerchantStock(Integer id){

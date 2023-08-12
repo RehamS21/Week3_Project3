@@ -31,8 +31,11 @@ public class UserController {
             return ResponseEntity.status(400).body(new ApiResponse(message));
         }
 
-        userService.addNewUser(user);
-        return ResponseEntity.status(200).body(new ApiResponse("New user added successfully"));
+        boolean isAdded = userService.addNewUser(user);
+        if (isAdded)
+            return ResponseEntity.status(200).body(new ApiResponse("New user added successfully"));
+        else
+            return ResponseEntity.status(400).body(new ApiResponse("Sorry, the user is already taken"));
     }
 
     @PutMapping("/update/{id}")
@@ -47,7 +50,7 @@ public class UserController {
         if (isValid)
             return ResponseEntity.status(200).body(new ApiResponse("The user information updated successfully"));
         else
-            return ResponseEntity.status(400).body(new ApiResponse("Sorry, the user id is wrong"));
+            return ResponseEntity.status(400).body(new ApiResponse("Sorry, the user id is wrong or updated user id is already taken"));
     }
 
     @DeleteMapping("/delete/{id}")

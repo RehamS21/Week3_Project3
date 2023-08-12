@@ -24,9 +24,13 @@ public class CategoryController {
             String message = errors.getFieldError().getDefaultMessage();
             return ResponseEntity.status(400).body(new ApiResponse(message));
         }
-        categoryService.addNewCategory(category);
-        return ResponseEntity.status(200).body(new ApiResponse("New category added successfully"));
+        boolean isAdded = categoryService.addNewCategory(category);
+        if (isAdded)
+            return ResponseEntity.status(200).body(new ApiResponse("New category added successfully"));
+        else
+            return ResponseEntity.status(400).body(new ApiResponse("Sorry, the id already taken"));
     }
+
 
     @PutMapping("/update/{id}")
     public ResponseEntity updateCategory(@PathVariable Integer id , @RequestBody @Valid Category category , Errors errors){
@@ -39,7 +43,7 @@ public class CategoryController {
         if(isValied)
             return ResponseEntity.status(200).body(new ApiResponse("The category successfully updated"));
         else
-            return ResponseEntity.status(400).body(new ApiResponse("Sorry, the category id is wrong"));
+            return ResponseEntity.status(400).body(new ApiResponse("Sorry, the category id is wrong or already taken"));
     }
 
     @DeleteMapping("/delete/{id}")

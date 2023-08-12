@@ -21,18 +21,41 @@ public class UserService {
         return users;
     }
 
-    public void addNewUser(User user) {
-        users.add(user);
+    public boolean addNewUser(User user) {
+        boolean isChecked = checkIds(user.getId());
+        if (isChecked){
+            users.add(user);
+            return true;
+        }else
+            return false;
+    }
+    public boolean checkIds(Integer id){
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getId() == id)
+                return false;
+        }
+        return true;
     }
 
     public boolean updateUser(Integer id, User user) {
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId() == id) {
-                users.set(i, user);
-                return true;
+        boolean isChecked = checkIds(id, user);
+        if (isChecked) {
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).getId() == id) {
+                    users.set(i, user);
+                    return true;
+                }
             }
         }
         return false;
+    }
+
+    public boolean checkIds(Integer id, User user){
+        for (int i = 0; i < users.size(); i++) {
+            if(user.getId() != id && user.getId() == users.get(i).getId())
+                return false;
+        }
+        return true;
     }
 
     public boolean deleteUser(Integer id){

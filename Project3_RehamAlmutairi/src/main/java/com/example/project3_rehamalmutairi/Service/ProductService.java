@@ -29,20 +29,41 @@ public class ProductService {
 
     public boolean addNewProduct(Product product){
         if (isFoundCategoryId(product.getCategoryid())) {
-            products.add(product);
-            return true;
+            boolean isChecked = checkIds(product.getId());
+            if (isChecked) {
+                products.add(product);
+                return true;
+            }else
+                return false;
         }else
             return false;
     }
+    public boolean checkIds(Integer id){
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getId() == id)
+                return false;
+        }
+        return true;
+    }
 
     public boolean updateProduct(Integer id , Product product){
-        for (int i = 0; i < products.size(); i++) {
-            if((products.get(i).getId() == id) && isFoundCategoryId(product.getCategoryid())){
-                products.set(i , product);
-                return true;
+        boolean isChecked = checkIds(id,product);
+        if (isChecked) {
+            for (int i = 0; i < products.size(); i++) {
+                if ((products.get(i).getId() == id) && isFoundCategoryId(product.getCategoryid())) {
+                    products.set(i, product);
+                    return true;
+                }
             }
         }
         return false;
+    }
+    public boolean checkIds(Integer id, Product product){
+        for (int i = 0; i < products.size(); i++) {
+            if(product.getId() != id && product.getId() == products.get(i).getId())
+                return false;
+        }
+        return true;
     }
 
     public boolean deleteProduct(Integer id){
