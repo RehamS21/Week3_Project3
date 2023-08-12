@@ -22,5 +22,5 @@ public class MerchantStock {
 
     @NotNull( message = "stock should not a null")
     @Min(value = 11, message = "The stock should be more than 10")
-    private Integer stock = 10;
+    private Integer stock = 11;
 }
