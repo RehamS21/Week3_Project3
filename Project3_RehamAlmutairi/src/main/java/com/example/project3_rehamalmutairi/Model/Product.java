@@ -25,6 +25,7 @@ public class Product {
     private Double price;
 
     @NotNull(message = "Category should not empty")
+    @Positive(message = "Category id must a positive number")
     private Integer categoryid;
 
 }
