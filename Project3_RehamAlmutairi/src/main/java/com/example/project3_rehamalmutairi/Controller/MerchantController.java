@@ -66,7 +66,7 @@ public class MerchantController {
         boolean isAdd = merchantService.additionalStock(productId,merchantid,stock);
 
         if(isAdd) {
-            boolean isChecked = checkStockNumber(stock);
+            boolean isChecked = merchantService.checkStockNumber(stock);
             if (isChecked)
                 return ResponseEntity.status(200).body(new ApiResponse("Add additional stock successfully"));
             else
@@ -76,12 +76,7 @@ public class MerchantController {
             return ResponseEntity.status(400).body(new ApiResponse("Please verify from the product is or merchant id again"));
 
     }
-    public boolean checkStockNumber(Integer stock){
-        if(stock > 0)
-            return true;
-        else
-            return false;
-    }
+
 
 
 }

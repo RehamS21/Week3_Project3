@@ -103,4 +103,11 @@ public class MerchantService {
 
         return false;
     }
+
+    public boolean checkStockNumber(Integer stock){
+        if(stock > 0)
+            return true;
+        else
+            return false;
+    }
 }
